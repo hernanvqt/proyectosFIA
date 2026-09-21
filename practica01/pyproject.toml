@@ -1,8 +1,7 @@
 [project]
-name = "p1fia"
+name = "practica01"
 version = "0.1.0"
 description = "Add your description here"
-readme = "README.md"
 authors = [
     { name = "Hernan VQ", email = "hernanvqt@gmail.com" }
 ]
@@ -10,7 +9,7 @@ requires-python = ">=3.14"
 dependencies = []
 
 [project.scripts]
-p1fia = "p1fia.p1:main"
+practica01 = "practica01.main:main"
 
 [build-system]
 requires = ["uv_build>=0.12.17,<0.13.0"]
