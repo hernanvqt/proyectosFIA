@@ -1,23 +1,31 @@
 # Curso 2026-27 - FIA
 # Programa que devuelve el hito más relevante de la IA dado un año
 # Grupo:
-# Nombres y apellidos:
+# Nombres y apellidos: Trajano Arthur Iacob, Hernan Velarde Quiro
 #
+
 
 # Ejercicio 1
 # a) (respuesta al apartado a)
-#
-#
-#
+# Ninguno ha sido capaz de pasar por humano. 
+# La razon por la que Eliza no pasa el test de Turing es porque 
+# repite mucho algunas sentencias ignorando al entrevistador
+# con la intencion de seguir su guion.
+# Parry por otro lado, tiene un guion que impide que sea mas libre
+# para cometer errores, sus respuestas con muy consisas, lo cual
+# dificulta el test. Ademas de que el LLM le ayuda en gran medida.
+
 # b) (respuesta al apartado b)
-#
-#
+# Parry es mejor que las dos porque el LLM le ayuda mucho. Entre las dos
+# Eliza es muy repititiva y siempre utiliza las mismas frase cambiando 
+# un par de palabras con las que usaste antes, Alicia lo disfraza mejor
 #
 # c) (respuesta al apartado c)
 #
-#
-#
-#
+# No parecen dos humanos, porque ambos son muy insistentes con sus temas,
+# Elizia repite constamente las mismas frases y Parry pese a pecar de lo
+# mismo, es capaz de darse cuenta de que Elizia se repite por lo que es 
+# mejor.
 
 # Ejercicio 2
 
