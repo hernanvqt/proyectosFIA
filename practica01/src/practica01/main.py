@@ -85,6 +85,8 @@ def busca_anio_en_lista(lista_hitos, anio):
 def imprime_hito(hito, anio):
     print(f"En {anio} {hito}")
 
+def estadisticas_busqueda(hitos_consultados, lista_hitos):
+    
 
 def main():
     print('Ejercicio 2a: Bienvenido al Programa modular de historia de la IA')
@@ -101,7 +103,7 @@ def main():
     # Implementación de apartado b
     print('Ejercicio 2b: Bienvenido a la base de conocimiento de la historia de la IA')
 
-#  def estadisticas_busqueda(hitos_consultados, lista_hitos):
+
 
 
 if __name__ == "__main__":
