@@ -86,7 +86,12 @@ def imprime_hito(hito, anio):
     print(f"En {anio} {hito}")
 
 def estadisticas_busqueda(hitos_consultados, lista_hitos):
+    total_anios = len(lista_hitos)
+    print(f"a.Número total de años consultados: {total_anios}")
+
     
+    
+        
 
 def main():
     print('Ejercicio 2a: Bienvenido al Programa modular de historia de la IA')
