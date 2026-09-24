@@ -27,6 +27,8 @@
 # mismo, es capaz de darse cuenta de que Elizia se repite por lo que es
 # mejor.
 
+from pathlib import Path
+
 # Ejercicio 2
 
 def pide_datos():
@@ -43,8 +45,14 @@ def extrae_datos_linea(linea):
 
 
 def extrae_datos_fichero(nombre_fichero):
+    ruta = Path(__file__).resolve().parent / nombre_fichero
+    if not ruta.is_file():
+        ruta = Path(__file__).resolve().parents[1] / nombre_fichero
+    if not ruta.is_file():
+        ruta = Path(nombre_fichero)
+
     datos = []
-    with open(nombre_fichero) as f:
+    with open(ruta, encoding="utf-8") as f:
         for linea in f:
             hito = extrae_datos_linea(linea)
             datos.append(hito)
@@ -86,30 +94,57 @@ def imprime_hito(hito, anio):
     print(f"En {anio} {hito}")
 
 def estadisticas_busqueda(hitos_consultados, lista_hitos):
-    total_anios = len(lista_hitos)
+    total_anios = len(hitos_consultados)
     print(f"a.Número total de años consultados: {total_anios}")
 
+    min_anioInicio = float('inf')
+    cont_inviernos = 0
+    hito_mas_antiguo = None
+
+    for anio in hitos_consultados:
+        int_anio = int(anio)
+        hito_encontrado = None
+
+        for hito in lista_hitos:
+            ini = int(hito["inicio"])
+            fin = int(hito["fin"])
+
+            if ini <= int_anio <= fin:
+                if hito_encontrado is None or (ini == int_anio == fin):
+                    hito_encontrado = hito
+
+        if hito_encontrado:
+            ini_hito = int(hito_encontrado["inicio"])
+            if ini_hito < min_anioInicio:
+                min_anioInicio = ini_hito
+                hito_mas_antiguo = hito_encontrado["texto"]
+
+            if "invierno" in hito_encontrado["texto"].lower():
+                cont_inviernos += 1
+
+    if hito_mas_antiguo:
+        print(f"b. El hito histórico más antiguo de los que ha consultado el usuario: {hito_mas_antiguo}")
+    else:
+        print("b. No se ha encontrado ningún hito histórico consultado por el usuario.")
     
-    
+    print(f"c. Años consultados correspondieron a los inviernos de la IA.: {cont_inviernos}")
         
 
 def main():
-    print('Ejercicio 2a: Bienvenido al Programa modular de historia de la IA')
-    lista_anios = pide_datos()
+    print('Ejercicio 2: Bienvenido al Programa modular de historia de la IA')
     lista_hitos = extrae_datos_fichero("historiaIAg2.csv")
+    lista_anios = pide_datos()
+    hitos_consultados = []
 
     while (len(lista_anios) > 0):
         for anio in lista_anios:
+            hitos_consultados.append(anio)
             hito = busca_anio_en_lista(lista_hitos, anio)
             imprime_hito(hito, anio)
         lista_anios = pide_datos()
+
+    estadisticas_busqueda(hitos_consultados, lista_hitos)
     print("Gracias por utilizar el programa")
-
-    # Implementación de apartado b
-    print('Ejercicio 2b: Bienvenido a la base de conocimiento de la historia de la IA')
-
-
-
 
 if __name__ == "__main__":
     main()
