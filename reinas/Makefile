@@ -4,7 +4,7 @@ help:
 	@echo "  make run       Ejecuta el script principal"
 	@echo "  make clean     Limpia los archivos temporales"
 
-TARGET = main
+TARGET = reinas
 
 # Instalar dependencias
 install:
@@ -12,7 +12,7 @@ install:
 
 # Ejecutar el script del proyecto
 run:
-	@uv run $(TARGET).py
+	@uv run src/$(TARGET)/main.py
 
 clean:
 	rm -rf .venv __pycache__ .pytest_cache .ruff_cache
