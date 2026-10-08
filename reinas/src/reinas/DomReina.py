@@ -2,60 +2,64 @@ from search import Problem
 
 
 class DomReina(Problem):
-    """The problem of placing N queens on an NxN board with none attacking
-    each other. A state is represented as an N-element array, where
-    a value of r in the c-th entry means there is a queen at column c,
-    row r, and a value of -1 means that the c-th column has not been
-    filled in yet. We fill in columns left to right.
-    >>> depth_first_tree_search(NQueensProblem(8))
-    <Node (7, 3, 0, 2, 5, 1, 6, 4)>
+    """
+     Colocar el mínimo número de reinas en un tablero NxN, de forma
+     que cada casilla sea ocupada o atacada por al menos una reina.
+     Guardamos la posicion de las reinas colocadas, y para la
+     cobertura de estas reinas utilizamos 4 sets para la cobertura
+     de la dominacion y asi hacer una busqueda rapida de si esta contenido.
+     1. tupla posiciones ocupadas de reinas
+     2. conjunto inmutable de cobertura de filas
+     3. conjunto inmutable de cobertura de columnas
+     4. conjunto inmutable de cobertura de diagonal ascendente
+     5. conjunto inmutable de cobertura de diagonal descendente
     """
 
     def __init__(self, N):
-        super().__init__(tuple([-1] * N))
+        super().__init__(
+            tuple((tuple(), frozenset(), frozenset(), frozenset(), frozenset())))
         self.N = N
 
     def actions(self, state):
-        """In the leftmost empty column, try all non-conflicting rows."""
-        if state[-1] != -1:
-            return []  # All columns filled; no successors
-        else:
-            col = state.index(-1)
-            return [row for row in range(self.N)
-                    if not self.conflicted(state, row, col)]
+        """
+        Una accion sera una casilla que no contiene una reina
+        """
+        reinas = state[0]
+        return [(f, c) for f in range(self.N) for c in range(self.N)
+                if (f, c) not in reinas]
 
-    def result(self, state, row):
-        """Place the next queen at the given row."""
-        col = state.index(-1)
-        new = list(state[:])
-        new[col] = row
-        return tuple(new)
-
-    def conflicted(self, state, row, col):
-        """Would placing a queen at (row, col) conflict with anything?"""
-        return any(self.conflict(row, col, state[c], c)
-                   for c in range(col))
-
-    def conflict(self, row1, col1, row2, col2):
-        """Would putting two queens in (row1, col1) and (row2, col2) conflict?"""
-        return (row1 == row2 or  # same row
-                col1 == col2 or  # same column
-                row1 - col1 == row2 - col2 or  # same \ diagonal
-                row1 + col1 == row2 + col2)  # same / diagonal
+    def result(self, state, action):
+        """
+        Al aplicar una accion, es decir, colocar una reina, debemos anadirlo
+        a nuestra tupla de reinas y actualizar la cobertura en los 4 sets
+        """
+        reinas, filas, columnas, diag_asc, diag_desc = state
+        f, c = action
+        return (
+            reinas + (action,),
+            filas | {f},
+            columnas | {c},
+            diag_asc | {f+c},
+            diag_desc | {f-c},
+        )
 
     def goal_test(self, state):
-        """Check if all columns filled, no conflicts."""
-        if state[-1] == -1:
-            return False
-        return not any(self.conflicted(state, state[col], col)
-                       for col in range(len(state)))
+        """ El objetivo sera cubrir todo el tablero, este caso se comprobara"""
+        reinas, filas, cols, diag_asc, diag_desc = state
+        N = self.N
+        for f in range(N):
+            for c in range(N):
+                if (f not in filas and c not in cols
+                        and (f + c) not in diag_asc and (f - c) not in diag_desc):
+                    return False
+        return True
 
-    def h(self, node):
-        """Return number of conflicting queens for a given node"""
-        num_conflicts = 0
-        for (r1, c1) in enumerate(node.state):
-            for (r2, c2) in enumerate(node.state):
-                if (r1, c1) != (r2, c2):
-                    num_conflicts += self.conflict(r1, c1, r2, c2)
-
-        return num_conflicts
+    # def h(self, node):
+    #     """Return number of conflicting queens for a given node"""
+    #     num_conflicts = 0
+    #     for (r1, c1) in enumerate(node.state):
+    #         for (r2, c2) in enumerate(node.state):
+    #             if (r1, c1) != (r2, c2):
+    #                 num_conflicts += self.conflict(r1, c1, r2, c2)
+    #
+    #     return num_conflicts

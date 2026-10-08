@@ -139,39 +139,39 @@ def imprimir_sol(nodo, algoritmo, size, coste, n_minimo):
 
 def imprimir_tabla_solucion(nodo):
     print(f"{'Reinas':<8} | {'Fila':>4} | {'Col':>4} |")
-    for fila, col in enumerate(nodo.state):
-        print(f"{'Reina ' + str(fila + 1):<8} | {fila:>4} | {col:>4} |")
+    for i, (fila, col) in enumerate(nodo.state[0]):
+        print(f"{'Reina ' + str(i + 1):<8} | {fila:>4} | {col:>4} |")
 
 
-N = 8
+N = 4
 problema = DomReina(N)
 
 inicio = time.time()
 sol = breadth_first_tree_search(problema)
 fin = time.time()
 tiempo_total = fin - inicio
-imprimir_sol(sol, "BPA", len(problema.initial), tiempo_total, len(sol.state))
+imprimir_sol(sol, "BPA", problema.N, tiempo_total, len(sol.state[0]))
 
 inicio = time.time()
 sol = depth_first_tree_search(problema)
 fin = time.time()
 tiempo_total = fin - inicio
-imprimir_sol(sol, "BPP", len(problema.initial), tiempo_total, len(sol.state))
+imprimir_sol(sol, "BPP", problema.N, tiempo_total, len(sol.state[0]))
 
 inicio = time.time()
 sol = uniform_cost_search(problema)
 fin = time.time()
 tiempo_total = fin - inicio
-imprimir_sol(sol, "BCU", len(problema.initial), tiempo_total, len(sol.state))
+imprimir_sol(sol, "BCU", problema.N, tiempo_total, len(sol.state[0]))
 
 inicio = time.time()
 sol = depth_limited_search(problema)
 fin = time.time()
 tiempo_total = fin - inicio
-imprimir_sol(sol, "BPL", len(problema.initial), tiempo_total, len(sol.state))
+imprimir_sol(sol, "BPL", problema.N, tiempo_total, len(sol.state[0]))
 
 inicio = time.time()
 sol = iterative_deepening_search(problema)
 fin = time.time()
 tiempo_total = fin - inicio
-imprimir_sol(sol, "BPI", len(problema.initial), tiempo_total, len(sol.state))
+imprimir_sol(sol, "BPI", problema.N, tiempo_total, len(sol.state[0]))
