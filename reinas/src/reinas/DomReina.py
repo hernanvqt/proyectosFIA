@@ -1,6 +1,7 @@
 from search import Problem
-
-
+"""
+Trajano Arthur Iacob, Hernan Velarde Quiros
+"""
 class DomReina(Problem):
     """
      Colocar el mínimo número de reinas en un tablero NxN, de forma

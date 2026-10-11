@@ -1,5 +1,7 @@
 from search import Problem
-
+"""
+Trajano Arthur Iacob, Hernan Velarde Quiros
+"""
 
 class EightPuzzle(Problem):
     """ The problem of sliding tiles numbered from 1 to 8 on a 3x3 board, where one of the
