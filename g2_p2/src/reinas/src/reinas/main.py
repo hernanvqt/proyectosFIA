@@ -3,7 +3,9 @@ from collections import deque
 from search import Node, PriorityQueue, memoize
 import sys
 import time
-
+"""
+Trajano Arthur Iacob, Hernan Velarde Quiros, Grupo 2
+"""
 
 def imprime_estados(estados):
     for i, (accion, estado) in enumerate(estados.items()):

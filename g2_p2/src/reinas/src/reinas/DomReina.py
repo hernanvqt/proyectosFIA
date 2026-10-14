@@ -1,6 +1,6 @@
 from search import Problem
 """
-Trajano Arthur Iacob, Hernan Velarde Quiros
+Trajano Arthur Iacob, Hernan Velarde Quiros, Grupo 2
 """
 class DomReina(Problem):
     """

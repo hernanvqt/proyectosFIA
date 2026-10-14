@@ -1,5 +1,7 @@
 from eightpuzzle import EightPuzzle
-
+"""
+Trajano Arthur Iacob, Hernan Velarde Quiros, Grupo 2
+"""
 
 def imprime_estados(estados):
     for i, (accion, estado) in enumerate(estados.items()):
