@@ -145,7 +145,7 @@ def imprimir_tabla_solucion(nodo):
         print(f"{'Reina ' + str(i + 1):<8} | {fila:>4} | {col:>4} |")
 
 
-N = 7
+N = 4
 problema = DomReina(N)
 
 inicio = time.time()
