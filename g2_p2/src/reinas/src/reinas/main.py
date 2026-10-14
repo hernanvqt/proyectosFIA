@@ -143,7 +143,7 @@ def imprimir_tabla_solucion(nodo):
         print(f"{'Reina ' + str(i + 1):<8} | {fila:>4} | {col:>4} |")
 
 
-N = 4
+N = 7
 problema = DomReina(N)
 
 inicio = time.time()
@@ -152,24 +152,28 @@ fin = time.time()
 tiempo_total = fin - inicio
 imprimir_sol(sol, "BPA", problema.N, tiempo_total, len(sol.state[0]))
 
+problema = DomReina(N)
 inicio = time.time()
 sol = depth_first_tree_search(problema)
 fin = time.time()
 tiempo_total = fin - inicio
 imprimir_sol(sol, "BPP", problema.N, tiempo_total, len(sol.state[0]))
 
+problema = DomReina(N)
 inicio = time.time()
 sol = uniform_cost_search(problema)
 fin = time.time()
 tiempo_total = fin - inicio
 imprimir_sol(sol, "BCU", problema.N, tiempo_total, len(sol.state[0]))
 
+problema = DomReina(N)
 inicio = time.time()
 sol = depth_limited_search(problema)
 fin = time.time()
 tiempo_total = fin - inicio
 imprimir_sol(sol, "BPL", problema.N, tiempo_total, len(sol.state[0]))
 
+problema = DomReina(N)
 inicio = time.time()
 sol = iterative_deepening_search(problema)
 fin = time.time()
