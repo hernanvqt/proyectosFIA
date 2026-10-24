@@ -4,8 +4,8 @@ from collections import defaultdict
 from pathlib import Path
 
 # Practica 3
-# Grupo:
-# Nombres:
+# Grupo: 2
+# Nombres: Hernan Velarde Quiros, Trajano Arthur Iacob
 
 
 class ProblemaGrafo(Problem):
