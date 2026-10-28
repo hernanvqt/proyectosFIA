@@ -86,4 +86,4 @@ class ProblemaGrafo(Problem):
 
     def h(self, node):
         """Devuelve la función heurística"""
-        return self.heuristica.get(node)
+        return self.heuristica.get(node.state)
