@@ -31,8 +31,14 @@ class ProblemaGrafo(Problem):
         diccionario con el mapa"""
         dists = defaultdict(dict)
         mapa = Path(self.nf_mapa)
+        if not mapa.exists():
+            alt = Path(__file__).resolve().parent / Path(self.nf_mapa).name
+            if alt.exists():
+                mapa = alt
         for line in mapa.read_text(encoding="utf-8").splitlines():
             line = line.strip()
+            if not line:
+                continue
             origen, dest, distancia = line.split(" ")
             # No es necesario anadir dest -> origen porque el Grafo lo
             # puede interpretar como no dirigido y tenerlo en cuenta
@@ -44,8 +50,14 @@ class ProblemaGrafo(Problem):
         devuelve en un dicccionario"""
         heuristicas = dict()
         file = Path(self.nf_heuristica)
+        if not file.exists():
+            alt = Path(__file__).resolve().parent / Path(self.nf_heuristica).name
+            if alt.exists():
+                file = alt
         for line in file.read_text(encoding="utf-8").splitlines():
             line = line.strip()
+            if not line:
+                continue
             lugar, heuris = line.split(" ")
             heuristicas[lugar] = int(heuris)
         return heuristicas
