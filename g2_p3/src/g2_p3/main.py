@@ -62,11 +62,19 @@ def imprimir_tiempo_solucion_no_informada(lista_M, inicial, goal):
         imprimir_tiempo_solucion(tiempos, solucion, "BCU")
 
 
-def medir_tiempo_informada(algoritmo, m, inicial, goal, nf_mapa, nf_heuristica):
+def medir_tiempo_informada(algoritmo, m, inicial, goal, *args, **kwargs):
+    if len(args) == 2:
+        mapa_file, heuris_file = args
+    elif len(args) >= 3:
+        _, mapa_file, heuris_file = args[:3]
+    else:
+        mapa_file = kwargs.get('nf_mapa', nf_mapa)
+        heuris_file = kwargs.get('nf_heuristica', nf_heuristica)
+
     lista_tiempos = []
     nodo_sol = None
     for _ in range(m):
-        problema = ProblemaGrafo(inicial, goal, nf_mapa, nf_heuristica)
+        problema = ProblemaGrafo(inicial, goal, mapa_file, heuris_file)
         t_inicio = time.time()
         nodo_sol = algoritmo(problema, problema.h)
         t_fin = time.time()
@@ -75,16 +83,18 @@ def medir_tiempo_informada(algoritmo, m, inicial, goal, nf_mapa, nf_heuristica):
     return lista_tiempos, nodo_sol
 
 
-def imprimir_tiempo_solucion_informada(lista_M, inicial, goal):
+def imprimir_tiempo_solucion_informada(lista_M, inicial, goal, mapa_file=None, heuris_file=None):
+    mf = mapa_file or nf_mapa
+    hf = heuris_file or nf_heuristica
     print(f"{'Algoritmo':<9} | {'M':<5} | {'Tiempo':>15} | {'Solución':<46} | {'Coste':>6} |")
     print("-" * 92)
     for m in lista_M:
         tiemposBV, solucionBV = medir_tiempo_informada(
-            greedy_best_first_graph_search, m, inicial, goal, nf_mapa, nf_heuristica)
+            greedy_best_first_graph_search, m, inicial, goal, mf, hf)
         imprimir_tiempo_solucion(tiemposBV, solucionBV, "BV")
 
         tiemposBA, solucionBA = medir_tiempo_informada(
-            astar_search, m, inicial, goal, nf_mapa, nf_heuristica)
+            astar_search, m, inicial, goal, mf, hf)
         imprimir_tiempo_solucion(tiemposBA, solucionBA, "BA*")
 
 
@@ -96,6 +106,7 @@ def main():
         ("Zamora", "Madrid")
     ]
 
+    print("EJERCICIO 3: Búsqueda No Informada (BCU)")
     for origen, destino in casos:
         print(f"\n>>> Comprobación solución individual: {origen} -> {destino}")
         prob = ProblemaGrafo(origen, destino, nf_mapa, nf_heuristica)
@@ -108,6 +119,20 @@ def main():
     for origen, destino in casos:
         print(f"\n>>> Medición de tiempos BCU ({origen} -> {destino}):")
         imprimir_tiempo_solucion_no_informada(lista_M, origen, destino)
+
+
+    print("EJERCICIO 4: Búsqueda Informada (BV y BA*)")
+    for origen, destino in casos:
+        print(f"\n>>> Medición de tiempos Informada (BV y BA*) ({origen} -> {destino}):")
+        imprimir_tiempo_solucion_informada(lista_M, origen, destino)
+
+    mapa_rum = resolver_ruta("mapa_rumania.txt")
+    heuris_rum = resolver_ruta("heuristica_rumania.txt")
+    if Path(mapa_rum).exists() and Path(heuris_rum).exists():
+        print("\n" + "=" * 92)
+        print("EJERCICIO 4: Búsqueda Informada - Caso Rumanía (Arad -> Bucharest)")
+        print("=" * 92)
+        imprimir_tiempo_solucion_informada(lista_M, "Arad", "Bucharest", mapa_rum, heuris_rum)
 
 
 if __name__ == "__main__":
